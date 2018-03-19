@@ -16,9 +16,9 @@ public class KnowitApplication extends Application{
 
     public static String API_KEY = "e2504169-8374-4477-9b0e-c56d4a566be1";
 
-    private BeaconEventListener beaconListener;
+    public static BeaconEventListener beaconListener;
 
-    private BeaconManager manager;
+    public static BeaconManager manager;
 
     public void onCreate() {
         super.onCreate();
@@ -34,12 +34,11 @@ public class KnowitApplication extends Application{
             }
         };
         manager.addListener(beaconListener);
-        manager.startListening();
     }
 
-    public void onTerminate() {
-        super.onTerminate();
-        manager.removeListener(beaconListener);
-        manager.stopListening();
-    }
+//    public void onTerminate() {
+//        super.onTerminate();
+//        manager.removeListener(beaconListener);
+//        manager.stopListening();
+//    }
 }

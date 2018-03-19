@@ -1,13 +1,10 @@
 package io.github.passioninfinite.knowit;
 
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.gimbal.android.Gimbal;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,13 +31,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
+        Gimbal.stop();
+        KnowitApplication.manager.stopListening();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         requestData();
 
         recyclerView = findViewById(R.id.card_recycler_view);
-        Log.d("get_count_error", String.valueOf(fairList.size()));
         fairsAdapter = new FairsAdapter(fairList);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(manager);
@@ -64,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
                         String start_time = object.getString("start_time");
                         String end_time = object.getString("end_time");
                         String date = object.getString("date");
-
-                        Fair fair = new Fair(name, location, start_time, end_time, date);
+                        String id = object.getString("_id");
+                        Fair fair = new Fair(id, name, location, start_time, end_time, date);
                         fairList.add(fair);
                         fairsAdapter.notifyDataSetChanged();
                     }
@@ -83,5 +82,4 @@ public class MainActivity extends AppCompatActivity {
 
         queue.add(stringRequest);
     }
-
 }

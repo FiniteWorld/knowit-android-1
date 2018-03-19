@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_companies"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        card_view:cardCornerRadius="0dp"
+        card_view:cardBackgroundColor="#FF9933"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="8sp"
+                android:textColor="#fff"
+                />
+
+
+            <TextView
+                android:id="@+id/company_branch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/company_name"
+                android:textSize="20sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="12sp"
+                android:layout_marginBottom="12sp"
+                android:textColor="#fff"
+                />
+
+            <com.github.siyamed.shapeimageview.RoundedImageView
+                android:layout_width="140sp"
+                android:layout_height="140sp"
+                android:id="@+id/company_image"
+                android:src="@drawable/logo"
+                android:layout_alignParentRight="true"
+                android:background="#fff"
+                android:scaleType="center"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:id="@+id/strip"
+                android:layout_below="@id/company_image"
+                android:background="@color/colorPrimary"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
+

@@ -6,13 +6,14 @@ package io.github.passioninfinite.knowit;
 
 public class Fair {
 
-    private String name, location, start_time, end_time, date;
+    private String id, name, location, start_time, end_time, date;
 
     public Fair() {
 
     }
 
-    public Fair(String name, String location, String start_time, String end_time, String date) {
+    public Fair(String id, String name, String location, String start_time, String end_time, String date) {
+        this.id = id;
         this.name = name;
         this.location = location;
         this.start_time = start_time;
@@ -20,6 +21,9 @@ public class Fair {
         this.date = date;
     }
 
+    public String getId() {
+        return this.id;
+    }
 
     public String getName() {
         return this.name;
@@ -60,5 +64,9 @@ public class Fair {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

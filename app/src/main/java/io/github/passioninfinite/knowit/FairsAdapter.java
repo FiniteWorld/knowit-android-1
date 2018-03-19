@@ -1,5 +1,6 @@
 package io.github.passioninfinite.knowit;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -54,18 +55,28 @@ public class FairsAdapter extends RecyclerView.Adapter<FairsAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FairsAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final FairsAdapter.MyViewHolder holder, final int position) {
         Fair fair = fairList.get(position);
         holder.name.setText(fair.getName());
         holder.location.setText(fair.getLocation());
         holder.start_time.setText(fair.getStartTime());
         holder.end_time.setText(fair.getEndTime());
         holder.date.setText(fair.getDate());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Fair fair = fairList.get(holder.getAdapterPosition());
+                Intent intent = new Intent(v.getContext(), FairDetail.class);
+                intent.putExtra("clicked_fair", fair.getId());
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        Log.d("count_check", String.valueOf(fairList.size()));
         return fairList.size();
     }
 }
