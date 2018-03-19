@@ -1,30 +1,26 @@
 package io.github.passioninfinite.knowit;
 
-
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.gimbal.android.BeaconEventListener;
+import com.gimbal.android.BeaconSighting;
 import com.gimbal.android.Gimbal;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +30,8 @@ public class FairDetail extends AppCompatActivity {
 
     private static String URL = "https://api.knowit-app.com/fairs";
 
+    public BeaconEventListener beaconListener;
+
     public TextView name, location;
 
     public FairDetailAdapter fairDetailAdapter;
@@ -42,12 +40,15 @@ public class FairDetail extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
+    private String stickerId = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fair_detail);
-        Gimbal.start();
-        KnowitApplication.manager.startListening();
+
+        addListenerAndStartListening();
+
         Intent intent = getIntent();
 
         recyclerView = findViewById(R.id.company_recycler_view);
@@ -108,6 +109,47 @@ public class FairDetail extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+    private void addListenerAndStartListening() {
+        Gimbal.start();
+
+        beaconListener = new BeaconEventListener() {
+            @Override
+            public void onBeaconSighting(BeaconSighting beaconSighting) {
+                super.onBeaconSighting(beaconSighting);
+                String beaconId = String.valueOf(beaconSighting.getBeacon().getUuid());
+
+                Toast.makeText(getApplicationContext(), getStickerId(), Toast.LENGTH_SHORT).show();
+                if (beaconId != null && getStickerId() == null) {
+                    setStickerId(beaconId);
+                }else if (!getStickerId().equals(beaconId)) {
+                    setStickerId(beaconId);
+                } else {
+                    setStickerNull();
+                }
+            }
+        };
+        KnowitApplication.manager.addListener(beaconListener);
+        KnowitApplication.manager.startListening();
+    }
+
+    public void setStickerId(String stickerId) {
+        this.stickerId = stickerId;
+        Intent intent = new Intent(this, CompanyDetail.class);
+        intent.putExtra("sticker_id", this.stickerId);
+        startActivity(intent);
+    }
+
+    public void setStickerNull() {
+        this.stickerId = null;
+    }
+
+    public String getStickerId() {
+        return this.stickerId;
+    }
+
+    public void onResume() {
+        super.onResume();
+        setStickerNull();
+        addListenerAndStartListening();
+    }
 }
-
-

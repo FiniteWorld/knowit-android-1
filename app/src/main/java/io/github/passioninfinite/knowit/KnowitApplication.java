@@ -16,24 +16,12 @@ public class KnowitApplication extends Application{
 
     public static String API_KEY = "e2504169-8374-4477-9b0e-c56d4a566be1";
 
-    public static BeaconEventListener beaconListener;
-
     public static BeaconManager manager;
 
     public void onCreate() {
         super.onCreate();
         Gimbal.setApiKey(this, API_KEY);
-
         manager = new BeaconManager();
-        beaconListener = new BeaconEventListener() {
-            @Override
-            public void onBeaconSighting(BeaconSighting beaconSighting) {
-                super.onBeaconSighting(beaconSighting);
-
-                Toast.makeText(getApplicationContext(), String.valueOf(beaconSighting.getBeacon().getUuid()), Toast.LENGTH_SHORT).show();
-            }
-        };
-        manager.addListener(beaconListener);
     }
 
 //    public void onTerminate() {

@@ -82,4 +82,10 @@ public class MainActivity extends AppCompatActivity {
 
         queue.add(stringRequest);
     }
+
+    public void onResume() {
+        super.onResume();
+        KnowitApplication.manager.stopListening();
+        Gimbal.stop();
+    }
 }
