@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_jobs"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFAD5">
+
+            <TextView
+                android:id="@+id/position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="12sp"
+                android:text="Job Position: "
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/job_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/position"
+                android:layout_marginTop="12sp"
+                android:paddingLeft="4dp"
+                android:textColor="#000"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/position"
+                android:paddingLeft="4dp"
+                android:layout_marginTop="12sp"
+                android:id="@+id/description"
+                android:text="Description:"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="#000"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/description"
+                android:paddingLeft="4dp"
+                android:layout_marginTop="12sp"
+                android:id="@+id/job_description"
+                android:textSize="18dp"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/job_description"
+                android:paddingLeft="4dp"
+                android:layout_marginTop="12sp"
+                android:text="Pre-requisites:"
+                android:textStyle="bold"
+                android:id="@+id/requisites"
+                android:textSize="18dp"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/requisites"
+                android:paddingLeft="4dp"
+                android:layout_marginTop="12sp"
+                android:id="@+id/job_requisite"
+                android:textSize="18dp"
+                android:textColor="#000"
+                android:layout_marginBottom="12sp"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:layout_marginTop="12sp"
+                android:id="@+id/salary_text"
+                android:textSize="18dp"
+                android:text="Salary Per Hour:"
+                android:layout_below="@id/job_requisite"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_marginBottom="12sp"
+                />
+
+            <TextView
+                android:id="@+id/job_salary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/salary_text"
+                android:layout_alignBottom="@+id/salary_text"
+                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_toEndOf="@+id/position"
+                android:layout_toRightOf="@+id/position"
+                android:paddingLeft="4dp"
+                android:textColor="#000"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:layout_marginTop="12sp"
+                android:id="@+id/experience_text"
+                android:textSize="18dp"
+                android:text="Experience:"
+                android:layout_below="@id/salary_text"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_marginBottom="12sp"
+                />
+
+            <TextView
+                android:id="@+id/job_experience"
+                android:layout_width="wrap_content"
+                android:layout_below="@id/experience_text"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:textColor="#000"
+                android:textSize="18dp" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="4dp"
+                android:background="#000"
+                android:layout_marginTop="12sp"
+                android:layout_below="@id/job_experience"
+                android:id="@+id/strip"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

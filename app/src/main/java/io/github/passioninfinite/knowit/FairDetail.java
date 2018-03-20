@@ -42,8 +42,6 @@ public class FairDetail extends AppCompatActivity {
 
     private String stickerId;
 
-    private int count = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +80,6 @@ public class FairDetail extends AppCompatActivity {
 
                     JSONArray companyList = fair.getJSONArray("companies");
 
-                    Log.d("check_length", String.valueOf(companyList.length()));
                     for (int i=0; i< companyList.length();i++) {
                         JSONObject object = companyList.getJSONObject(i);
                         String name = object.getString("name");
@@ -91,10 +88,16 @@ public class FairDetail extends AppCompatActivity {
                         if (object.has("image_url")) {
                             imageUrl = object.getString("image_url");
                         }
-                        Log.d("check_name", imageUrl);
-                        Company company = new Company(name, location, imageUrl);
+                        JSONObject sticker = new JSONObject();
+                        if (object.has("sticker")) {
+                            if (object.isNull("sticker")) {
+                                sticker = new JSONObject();
+                            } else {
+                                sticker = object.getJSONObject("sticker");
+                            }
+                        }
+                        Company company = new Company(name, location, imageUrl, sticker);
                         companies.add(company);
-                        Log.d("check_name", String.valueOf(companies.size()));
                     }
                     fairDetailAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
@@ -113,22 +116,32 @@ public class FairDetail extends AppCompatActivity {
 
     private void addListenerAndStartListening() {
         Gimbal.start();
-        count = 0;
         beaconListener = new BeaconEventListener() {
             @Override
             public void onBeaconSighting(BeaconSighting beaconSighting) {
                 super.onBeaconSighting(beaconSighting);
                 String beaconId = String.valueOf(beaconSighting.getBeacon().getUuid());
 
-                if (beaconId != null && getStickerId() == null) {
-                    Toast.makeText(getApplicationContext(), String.valueOf(count), Toast.LENGTH_SHORT).show();
-                    count += 1;
-                    setStickerId(beaconId);
+                for(int i=0; i < companies.size(); i++) {
+                    Company company = companies.get(i);
+                    JSONObject sticker = company.getSticker();
+//                    Log.d("check_response", sticker.toString());
+                    try {
+                        String stickerId = sticker.getString("_id");
+                        if (stickerId != null && stickerId.equals(beaconId)) {
+                            if (getStickerId() == null) {
+                                setStickerId(beaconId);
+                            }
+                            if (!getStickerId().equals(beaconId)) {
+                                Toast.makeText(getApplicationContext(), "Checked!", Toast.LENGTH_SHORT).show();
+                                setStickerId(beaconId);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-                if (!getStickerId().equals(beaconId)) {
-                    Toast.makeText(getApplicationContext(), "Checked!", Toast.LENGTH_SHORT).show();
-                    setStickerId(beaconId);
-                }
+
             }
         };
         KnowitApplication.manager.addListener(beaconListener);
