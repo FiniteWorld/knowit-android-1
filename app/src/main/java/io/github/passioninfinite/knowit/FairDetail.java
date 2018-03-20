@@ -40,7 +40,9 @@ public class FairDetail extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
-    private String stickerId = null;
+    private String stickerId;
+
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,20 +113,21 @@ public class FairDetail extends AppCompatActivity {
 
     private void addListenerAndStartListening() {
         Gimbal.start();
-
+        count = 0;
         beaconListener = new BeaconEventListener() {
             @Override
             public void onBeaconSighting(BeaconSighting beaconSighting) {
                 super.onBeaconSighting(beaconSighting);
                 String beaconId = String.valueOf(beaconSighting.getBeacon().getUuid());
 
-                Toast.makeText(getApplicationContext(), getStickerId(), Toast.LENGTH_SHORT).show();
                 if (beaconId != null && getStickerId() == null) {
+                    Toast.makeText(getApplicationContext(), String.valueOf(count), Toast.LENGTH_SHORT).show();
+                    count += 1;
                     setStickerId(beaconId);
-                }else if (!getStickerId().equals(beaconId)) {
+                }
+                if (!getStickerId().equals(beaconId)) {
+                    Toast.makeText(getApplicationContext(), "Checked!", Toast.LENGTH_SHORT).show();
                     setStickerId(beaconId);
-                } else {
-                    setStickerNull();
                 }
             }
         };
@@ -136,6 +139,8 @@ public class FairDetail extends AppCompatActivity {
         this.stickerId = stickerId;
         Intent intent = new Intent(this, CompanyDetail.class);
         intent.putExtra("sticker_id", this.stickerId);
+        KnowitApplication.manager.stopListening();
+        Gimbal.stop();
         startActivity(intent);
     }
 
