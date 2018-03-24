@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "io.github.passioninfinite.knowit"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -31,5 +31,5 @@ dependencies {
     compile group: 'com.gimbal.android.v3', name: 'gimbal-sdk', version: '3.0'
     compile group: 'com.gimbal.android.v3', name: 'gimbal-slf4j-impl', version: '3.0'
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
-
+    compile 'com.ramotion.paperonboarding:paper-onboarding:1.1.1'
 }

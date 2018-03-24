@@ -23,11 +23,12 @@
                 android:id="@+id/company_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="32sp"
+                android:textSize="24sp"
                 android:layout_marginLeft="20sp"
                 android:layout_marginTop="8sp"
+                android:text="Hello World"
                 android:textColor="#fff"
-                />
+                android:layout_marginStart="20sp" />
 
 
             <TextView
@@ -36,15 +37,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/company_name"
                 android:textSize="20sp"
+                android:text="Toronto, ON"
                 android:layout_marginLeft="20sp"
-                android:layout_marginTop="12sp"
-                android:layout_marginBottom="12sp"
                 android:textColor="#fff"
                 />
 
             <com.github.siyamed.shapeimageview.RoundedImageView
-                android:layout_width="140sp"
-                android:layout_height="140sp"
+                android:layout_width="90sp"
+                android:layout_height="90sp"
                 android:id="@+id/company_image"
                 android:src="@drawable/logo"
                 android:layout_alignParentRight="true"
