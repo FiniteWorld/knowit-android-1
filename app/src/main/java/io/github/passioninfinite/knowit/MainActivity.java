@@ -43,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
+        Gimbal.stop();
+        KnowitApplication.manager.stopListening();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         Permissions.check(this, new String[]{
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_WIFI_STATE,
@@ -68,12 +74,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-        setTheme(R.style.AppTheme);
-        Gimbal.stop();
-        KnowitApplication.manager.stopListening();
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         requestData();
 
         recyclerView = findViewById(R.id.card_recycler_view);
@@ -116,16 +116,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void buildAlertMessageNoInternet() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("No internet connection")
+        builder.setMessage("Check your internet connection!")
                 .setCancelable(false)
-                .setPositiveButton("Enable", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Refresh", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
-                        startActivity(new Intent(Settings.ACTION_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        dialog.cancel();
+                        finish();
+                        startActivity(getIntent());
                     }
                 });
         final AlertDialog alert = builder.create();
@@ -171,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onResume() {
         super.onResume();
-        requestData();
         KnowitApplication.manager.stopListening();
         Gimbal.stop();
     }

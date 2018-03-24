@@ -35,9 +35,9 @@ public class Boarding extends AppCompatActivity {
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putBoolean("welcomeScreenShown", true);
                     editor.apply();
-                    Toast.makeText(getApplicationContext(), "This is out!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             });
         } else {
