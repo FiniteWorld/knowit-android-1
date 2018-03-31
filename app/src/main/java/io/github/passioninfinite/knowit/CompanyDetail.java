@@ -2,6 +2,7 @@ package io.github.passioninfinite.knowit;
 
 import android.content.Intent;
 
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CompanyDetail extends AppCompatActivity {
 
@@ -37,6 +40,8 @@ public class CompanyDetail extends AppCompatActivity {
 
     public RecyclerView recyclerView;
 
+    private TextToSpeech textToSpeech;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +54,9 @@ public class CompanyDetail extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.company_details_recycler);
         name = findViewById(R.id.company_textName);
-
-
-        requestData(stickerId);
+        if (stickerId != null) {
+            requestData(stickerId);
+        }
 
         jobsAdapter = new JobsAdapter(this.jobsList);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
@@ -73,6 +78,25 @@ public class CompanyDetail extends AppCompatActivity {
                     JSONObject company = sticker.getJSONObject("company");
                     JSONArray jobs = company.getJSONArray("jobs");
                     name.setText(company.getString("name"));
+                    textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                        @Override
+                        public void onInit(int status) {
+                            if (status == TextToSpeech.SUCCESS) {
+
+                                int result = textToSpeech.setLanguage(Locale.US);
+
+                                if (result == TextToSpeech.LANG_MISSING_DATA
+                                        || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                                    Log.e("TTS", "This Language is not supported");
+                                } else {
+                                    textToSpeech.speak("You are at "+name.getText().toString()+" table!", TextToSpeech.QUEUE_FLUSH, null);
+                                }
+                            } else {
+                                Log.e("TTS", "Initialization Failed!");
+                            }
+                        }
+                    });
+
                     String companyEmail = company.getString("email");
                     for (int i=0; i< jobs.length();i++) {
                         JSONObject object = jobs.getJSONObject(i);
